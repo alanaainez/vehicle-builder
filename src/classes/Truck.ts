@@ -51,14 +51,39 @@ class Truck extends Vehicle {
   // TODO: Implement the tow method from the AbleToTow interface
   tow(vehicle: Truck | Motorbike | Car): void {
     // TODO: Get the make an model of the vehicle if it exists
+    if ('make' in vehicle && 'model' in vehicle) {
+      console.log(`Towing vehicle: ${vehicle.make} ${vehicle.model}`);
+  } else {
+      console.log('Warning: Vehicle make and model unidentified!');
+  }
     // TODO: Check if the vehicle's weight is less than or equal to the truck's towing capacity
+    if (`weight` in vehicle && `towingCapacity` in this) {
+      if (vehicle.weight <= this.towingCapacity) {
+        console.log(`Towing vehicle: ${vehicle.make} ${vehicle.model}. The weight (${vehicle.weight} kg) is within capacity!`);
+      } else {
+        console.log(`Can't tow ${vehicle.make} ${vehicle.model}. The weight (${vehicle.weight} kg) is over the towing capacity (${this.towingCapacity} kg) :(.`);
+      }
+    } else {
+      console.log('Vehicle weight or truck towing capacity unknown.');
+    }
     // TODO: If it is, log that the vehicle is being towed
     // TODO: If it is not, log that the vehicle is too heavy to be towed
   }
-
   // TODO: Override the printDetails method from the Vehicle class
+  override printDetails(): void {
     // TODO: The method should call the printDetails method of the parent class
+  super.printDetails();
+  }
     // TODO: The method should log the details of the Truck
+    console.log(`VIN: ${this.vin}`);
+    console.log(`Make: ${this.make}`);
+    console.log(`Model: ${this.model}`);
+    console.log(`Year: ${this.year}`);
+    console.log(`Weight: ${this.weight}`);
+    console.log(`Top Speed: ${this.topSpeed}`);
+    console.log(`Color: ${this.color}`);
+    console.log(`Towing Capacity: ${this.towingCapacity}`);
+    console.log(`Wheels:${this.wheels.map((wheel, index) => `Wheel ${index + 1}`).join(', ')}`);
     // TODO: The details should include the VIN, make, model, year, weight, top speed, color, towing capacity, and wheels
 }
 
