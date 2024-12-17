@@ -187,6 +187,7 @@ class Cli {
           parseInt(answers.year),
           parseInt(answers.weight),
           parseInt(answers.topSpeed),
+          [new Wheel(), new Wheel(), new Wheel(), new Wheel()],
           parseInt(answers.towingCapacity),
         );
         // TODO: push the truck to the vehicles array
@@ -255,6 +256,10 @@ class Cli {
       ])
       .then((answers) => {
         // TODO: Use the answers object to pass the required properties to the Motorbike constructor
+        const wheels = [
+          new Wheel(parseInt(answers.frontWheelDiameter), answers.frontWheelBrand),
+          new Wheel(parseInt(answers.rearWheelDiameter), answers.rearWheelBrand),
+        ];
         const motorbike = new Motorbike(
             Cli.generateVin(),
             answers.color,
@@ -263,10 +268,7 @@ class Cli {
             parseInt(answers.year),
             parseInt(answers.weight),
             parseInt(answers.topSpeed),
-            parseInt(answers.frontWheelDiameter),
-            answers.frontWheelBrand,
-            parseInt(answers.rearWheelDiameter),
-            answers.rearWheelBrand,  
+            wheels,  
         );
         // TODO: push the motorbike to the vehicles array
         this.vehicles.push(motorbike);
@@ -300,12 +302,12 @@ class Cli {
       if (vehicleToTow === truck) {
         // TODO: if it is, log that the truck cannot tow itself then perform actions on the truck to allow the user to select another action
         console.log(`This baby can't tow itself! Please pick another vehicle.`);
-        this.selectTruckAction(truck);
+        //this.selectTruckAction(truck);
         // TODO: if it is not, tow the selected vehicle then perform actions on the truck to allow the user to select another action
       } else {
-        console.log(`Towing vehicle: ${vehicleToTow.make} ${vehicleToTow.model}`.);
+        console.log(`Towing vehicle: ${vehicleToTow.make} ${vehicleToTow.model}.`);
         truck.tow(vehicleToTow);
-        this.selectTruckAction(truck);
+        //this.selectTruckAction(truck);
       }
       });
   }
@@ -407,7 +409,7 @@ class Cli {
         const selectedVehicle = this.vehicles.find((vehicle) =>
           vehicle.vin === this.selectedVehicleVin);
         if (selectedVehicle instanceof Motorbike) {
-          selectedVehicle.wheelie();
+          selectedVehicle.wheelie(selectedVehicle);
         } else {
           console.log('Sorry, only motorbikes can wheelie.');
         }

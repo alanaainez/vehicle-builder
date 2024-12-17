@@ -1,6 +1,6 @@
 // Importing Vehicle and Wheel classes
-import Vehicle from './Vehicle.js';
-import Wheel from './Wheel.js';
+import Vehicle from './Vehicle';
+import Wheel from './Wheel';
 
 // TODO: The Motorbike class should extend the Vehicle class
 class Motorbike extends Vehicle {
@@ -53,6 +53,7 @@ class Motorbike extends Vehicle {
   // TODO: The method should call the printDetails method of the parent class
    super.printDetails();
   // TODO: The method should log the details of the Motorbike
+    // TODO: The details should include the VIN, make, model, year, weight, top speed, color, and wheels
     console.log(`VIN: ${this.vin}`);
     console.log(`Make: ${this.make}`);
     console.log(`Model: ${this.model}`);
@@ -60,9 +61,14 @@ class Motorbike extends Vehicle {
     console.log(`Weight: ${this.weight}`);
     console.log(`Top Speed: ${this.topSpeed}`);
     console.log(`Color: ${this.color}`);
-    console.log(`Wheels: ${this.wheels.map((wheel, index) => `Wheel ${index + 1}`).join(', ')}`);
+    
+    console.log(
+      `Wheel 1: ${this.wheels[0].getDiameter} inch with a ${this.wheels[0].getTireBrand} tire`
+    );
+    console.log(
+      `Wheel 2: ${this.wheels[1].getDiameter} inch with a ${this.wheels[1].getTireBrand} tire`
+    );
   }  
-  // TODO: The details should include the VIN, make, model, year, weight, top speed, color, and wheels
 }
 
 // Export the Motorbike class as the default export
