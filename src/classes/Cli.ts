@@ -287,14 +287,14 @@ class Cli {
           type: 'list',
           name: 'vehicleToTow',
           message: 'Select a vehicle to tow',
-          choices: this.vehicles.map((vehicle) => {
-            return {
-              name: `${vehicle.vin} -- ${vehicle.make} ${vehicle.model}`,
-              value: vehicle,
-            };
-          }),
-        },
-      ])
+          choices: this.vehicles
+          .filter(vehicle => vehicle.vin !== truck.vin) // Exclude the truck itself
+          .map(vehicle => ({
+            name: `${vehicle.vin} -- ${vehicle.make} ${vehicle.model}`,
+            value: vehicle.vin, // Use VIN as the unique value
+          })),
+      },
+    ])
       .then((answers) => {
         const vehicleToTow = answers.vehicleToTow;
         // TODO: check if the selected vehicle is the truck
