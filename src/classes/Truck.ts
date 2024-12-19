@@ -1,9 +1,9 @@
 // import the Vehicle, Motorbike, Car, Wheel, and AbleToTow classes/interfaces
-import Vehicle from './Vehicle';
-import Motorbike from './Motorbike';
-import Car from './Car';
-import Wheel from './Wheel';
-import AbleToTow from '../interfaces/AbleToTow';
+import Vehicle from './Vehicle.js';
+import Motorbike from './Motorbike.js';
+import Car from './Car.js';
+import Wheel from './Wheel.js';
+import AbleToTow from '../interfaces/AbleToTow.js';
 
 // TODO: The Truck class should extend the Vehicle class and should implement the AbleToTow interface
 class Truck extends Vehicle implements AbleToTow {
@@ -61,15 +61,15 @@ class Truck extends Vehicle implements AbleToTow {
     // TODO: Check if the vehicle's weight is less than or equal to the truck's towing capacity
     if (`weight` in vehicle && `towingCapacity` in this) {
       if (vehicle.weight <= this.towingCapacity) {
+    // TODO: If it is, log that the vehicle is being towed
         console.log(`Towing vehicle: ${vehicle.make} ${vehicle.model}. The weight (${vehicle.weight} kg) is within capacity!`);
       } else {
+    // TODO: If it is not, log that the vehicle is too heavy to be towed
         console.log(`Can't tow ${vehicle.make} ${vehicle.model}. The weight (${vehicle.weight} kg) is over the towing capacity (${this.towingCapacity} kg) :(.`);
       }
     } else {
       console.log('Vehicle weight or truck towing capacity unknown.');
     }
-    // TODO: If it is, log that the vehicle is being towed
-    // TODO: If it is not, log that the vehicle is too heavy to be towed
   }
   // TODO: Override the printDetails method from the Vehicle class
   override printDetails(): void {
