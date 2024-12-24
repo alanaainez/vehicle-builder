@@ -4,11 +4,17 @@ import Driveable from '../interfaces/Driveable';
 // Vehicle class that implements Driveable interface
 class Vehicle implements Driveable {
   // Declare properties of the Vehicle class
+  vin: string;
+  make: string;
+  model: string;
   started: boolean;
   currentSpeed: number;
 
   // Constructor for the Vehicle class
-  constructor() {
+  constructor(vin: string, make: string, model: string) {
+    this.vin = vin;
+    this.make = make;
+    this.model = model;
     this.started = false;
     this.currentSpeed = 0;
   }

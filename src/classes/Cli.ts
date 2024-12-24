@@ -1,5 +1,6 @@
 // importing classes from other files
 import inquirer from "inquirer";
+import Vehicle from './Vehicle.js';
 import Truck from "./Truck.js";
 import Car from "./Car.js";
 import Motorbike from "./Motorbike.js";
@@ -285,10 +286,10 @@ class Cli {
       .prompt([
         {
           type: 'list',
-          name: 'vehicleToTow',
+          name: 'vehicleToTowVin',
           message: 'Select a vehicle to tow',
           choices: this.vehicles
-          .filter(vehicle => vehicle.vin !== truck.vin) // Exclude the truck itself
+          .filter((vehicle) => vehicle.vin !== truck.vin) // Exclude the truck itself
           .map(vehicle => ({
             name: `${vehicle.vin} -- ${vehicle.make} ${vehicle.model}`,
             value: vehicle.vin, // Use VIN as the unique value
@@ -296,18 +297,23 @@ class Cli {
       },
     ])
       .then((answers) => {
-        const vehicleToTow = answers.vehicleToTow;
+        const vehicleToTow = this.vehicles.find(
+          (vehicle) => vehicle.vin === answers.vehicleToTowVin
+        );
+
+        if (!vehicleToTow) {
+          console.log(`The selected vehicle could not be found. Please try again.`);
+          return this.performActions();
+        }
         // TODO: check if the selected vehicle is the truck
-      if (vehicleToTow.vin === truck.vin) {
+        if (vehicleToTow.vin === truck.vin) {
         // TODO: if it is, log that the truck cannot tow itself then perform actions on the truck to allow the user to select another action
         console.log(`This baby can't tow itself! Please pick another vehicle.`);
-        this.performActions();
         // TODO: if it is not, tow the selected vehicle then perform actions on the truck to allow the user to select another action
       } else {
         console.log(`Towing vehicle: ${vehicleToTow.make} ${vehicleToTow.model}.`);
         truck.tow(vehicleToTow);
-        this.performActions();
-      }
+      } this.performActions();
       });
   }
 
@@ -337,12 +343,19 @@ class Cli {
         },
       ])
       .then((answers) => {
+        const selectedVehicle = this.vehicles.find(
+          (vehicle) => vehicle.vin === this.selectedVehicleVin
+        );
+        if (!selectedVehicle) {
+          console.log('No vehicle selected. Please try again.');
+          return this.performActions();
+        }
         // perform the selected action
         if (answers.action === 'Print details') {
           // find the selected vehicle and print its details
           for (let i = 0; i < this.vehicles.length; i++) {
             if (this.vehicles[i].vin === this.selectedVehicleVin) {
-              this.vehicles[i].printDetails();
+             this.vehicles[i].printDetails();
             }
           }
         } else if (answers.action === 'Start vehicle') {
@@ -396,13 +409,11 @@ class Cli {
           }
         } else if (answers.action === 'Tow'){
         // TODO: add statements to perform the tow action only if the selected vehicle is a truck. Call the findVehicleToTow method to find a vehicle to tow and pass the selected truck as an argument. After calling the findVehicleToTow method, you will need to return to avoid instantly calling the performActions method again since findVehicleToTow is asynchronous.
-        const selectedVehicle = this.vehicles.find((vehicle) =>
-          vehicle.vin === this.selectedVehicleVin);
-        if (selectedVehicle instanceof Truck){
+        if (selectedVehicle instanceof Truck) {
           this.findVehicleToTow(selectedVehicle);
+          return;
         } else {
           console.log('Sorry, only trucks can tow.');
-          this.performActions();
         }
         // TODO: add statements to perform the wheelie action only if the selected vehicle is a motorbike
       } else if (answers.action === 'Wheelie'){
@@ -412,7 +423,6 @@ class Cli {
           selectedVehicle.wheelie();
         } else {
           console.log('Sorry, only motorbikes can wheelie.');
-          this.performActions();
         }
       }
         else if (answers.action === 'Select or create another vehicle') {
