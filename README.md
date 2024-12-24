@@ -6,9 +6,11 @@ Project utilizing typescript.
 ## Code Source & Location
 Testing and debugging assisted with ChatGPT for semantics.
 
-Repository Link: 
+Public link: https://alanaainez.github.io/vehicle-builder/
 
-Demo Link: 
+Repository Link: https://github.com/alanaainez/vehicle-builder.git
+
+Demo Link: https://drive.google.com/file/d/1CIegiPmN6f2CJmVtkU8Ommrhp-4KPKgY/view?usp=drive_link
 
 ## Your Task
 
